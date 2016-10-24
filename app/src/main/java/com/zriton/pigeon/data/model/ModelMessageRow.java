@@ -1,7 +1,5 @@
 package com.zriton.pigeon.data.model;
 
-import android.util.Log;
-
 /**
  * Created by aditya on 24/10/16.
  */
@@ -67,7 +65,6 @@ public class ModelMessageRow implements Comparable{
     public int compareTo(Object pO) {
         ModelMessageRow lModelMessageRow = (ModelMessageRow) pO;
         long diff =  this.getTimestamp() - lModelMessageRow.getTimestamp();
-        Log.d("asdd",String.valueOf(diff));
-        return (int) (this.getTimestamp() - lModelMessageRow.getTimestamp());
+        return (int) (lModelMessageRow.getTimestamp() - this.getTimestamp());
     }
 }
