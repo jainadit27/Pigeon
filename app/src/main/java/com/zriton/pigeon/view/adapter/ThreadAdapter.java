@@ -21,6 +21,10 @@ import butterknife.ButterKnife;
 public class ThreadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
+    public ArrayList<ModelMessage> getMessageArrayList() {
+        return mMessageArrayList;
+    }
+
     private ArrayList<ModelMessage> mMessageArrayList;
 
     private final int VIEW_TYPE_LEFT = 0;
@@ -34,6 +38,12 @@ public class ThreadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void addData(ArrayList<ModelMessage> pMessageArrayList) {
         mMessageArrayList.clear();
         mMessageArrayList.addAll(pMessageArrayList);
+        notifyDataSetChanged();
+    }
+
+    public void updateData(ModelMessage pModelMessage)
+    {
+        mMessageArrayList.add(pModelMessage);
         notifyDataSetChanged();
     }
 
