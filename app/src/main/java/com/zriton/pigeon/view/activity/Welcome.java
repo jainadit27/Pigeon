@@ -30,7 +30,7 @@ public class Welcome extends AppCompatActivity {
         else
         {
             ActivityCompat.requestPermissions(this,
-                    new String[]{"android.permission.READ_SMS","android.permission.SEND_SMS"}, REQUEST_CODE_ASK_PERMISSIONS);
+                    new String[]{"android.permission.READ_SMS","android.permission.SEND_SMS","android.permission.READ_CONTACTS"}, REQUEST_CODE_ASK_PERMISSIONS);
         }
     }
 
