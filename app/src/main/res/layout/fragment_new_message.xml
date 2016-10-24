@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.1sp"
+        android:background="@color/divider_white"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white">
+
+        <AutoCompleteTextView
+            android:id="@+id/actContact"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="54dp"
+            android:background="@null"
+            android:layout_marginLeft="16dp"
+            android:hint="Insert name or number ..."
+            android:maxLines="1"
+            android:textColor="@color/text_color_primary"
+            android:textSize="14sp"
+            android:inputType="number"/>
+
+        <ImageView
+            android:id="@+id/ivContact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/ic_person_add_grey_24dp"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.1sp"
+        android:background="@color/divider_white"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="80dp">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="2dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/etMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="54dp"
+                    android:background="@null"
+                    android:hint="Enter Message"
+                    android:paddingLeft="16dp"
+                    android:textColor="@color/text_color_primary"/>
+
+                <ImageView
+                    android:id="@+id/ivSend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/ic_send_grey_24dp"/>
+
+            </RelativeLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
+
+</LinearLayout>
