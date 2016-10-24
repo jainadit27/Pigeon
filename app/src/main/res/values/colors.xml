@@ -4,7 +4,15 @@
     <color name="colorPrimaryDark">#afbec3</color>
     <color name="colorAccent">#00abbb</color>
 
-    <color name="textColor">#45545b</color>
     <color name="purple">#5e01e8</color>
     <color name="turquiose">#00abbf</color>
+
+
+    <color name="divider_bg">#dbdddf</color>
+    <color name="divider_white">#c8ccce</color>
+    <color name="text_color_primary">#3a3f40</color>
+    <color name="text_color_secondary">#8c9096</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="background">#ecf1f4</color>
 </resources>
