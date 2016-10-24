@@ -22,6 +22,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.activity.MainActivity"/>
+
+        <receiver android:name=".data.receiver.MessageReceiver">
+            <intent-filter android:priority="99999">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
