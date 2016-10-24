@@ -2,9 +2,9 @@ package com.zriton.pigeon.view.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.zriton.pigeon.R;
 import com.zriton.pigeon.view.fragment.MessageFragment;
@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,9 +38,6 @@ public class MainActivity extends AppCompatActivity {
     private void setUpToolbar()
     {
         setSupportActionBar(mToolbar);
-        ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(false);
-        ab.setDisplayShowHomeEnabled(false);
     }
 
     /**
@@ -49,5 +48,16 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.container, MessageFragment.newInstance(),"Login").commit();
     }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            if(!getSupportFragmentManager().popBackStackImmediate())
+                finish();
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+
 
 }
