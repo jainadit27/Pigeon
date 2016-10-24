@@ -8,10 +8,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zriton.pigeon.R;
-import com.zriton.pigeon.data.model.ModelMessage;
+import com.zriton.pigeon.data.model.ModelMessageRow;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,17 +21,17 @@ import butterknife.ButterKnife;
 
 public abstract class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.DataHolder> {
 
-    private HashMap<String,ArrayList<ModelMessage>> mMessageHashMap;
+    private ArrayList<ModelMessageRow> mMessageRowArrayList;
 
     public abstract void messageClicked(String address);
 
     protected MessageAdapter() {
-        mMessageHashMap = new HashMap<>();
+        mMessageRowArrayList = new ArrayList<>();
     }
 
-    public void addMessages(HashMap<String,ArrayList<ModelMessage>> pMessageHashMap) {
-        mMessageHashMap.clear();
-        mMessageHashMap = pMessageHashMap;
+    public void addMessages(ArrayList<ModelMessageRow> pMessageRowArrayList) {
+        mMessageRowArrayList.clear();
+        mMessageRowArrayList.addAll(pMessageRowArrayList);
         notifyDataSetChanged();
     }
 
@@ -45,15 +44,14 @@ public abstract class MessageAdapter extends RecyclerView.Adapter<MessageAdapter
 
     @Override
     public void onBindViewHolder(DataHolder holder, int position) {
-        final ArrayList<ModelMessage> lModelMessageArrayList =(new ArrayList<>(mMessageHashMap.values())).get(position);
-        final ModelMessage lModelMessage = lModelMessageArrayList.get(lModelMessageArrayList.size()-1);
-        holder.tvName.setText(lModelMessage.getAddress() +" ("+String.valueOf(lModelMessageArrayList.size())+")");
-        holder.tvConversation.setText(lModelMessage.getBody());
-        holder.tvDate.setText(lModelMessage.getDate());
+        final ModelMessageRow lModelMessageRow = mMessageRowArrayList.get(position);
+        holder.tvName.setText(lModelMessageRow.getAddress() +" ("+String.valueOf(lModelMessageRow.getThreadCount())+")");
+        holder.tvConversation.setText(lModelMessageRow.getBody());
+        holder.tvDate.setText(lModelMessageRow.getDate());
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View pView) {
-                messageClicked(lModelMessage.getAddress());
+                messageClicked(lModelMessageRow.getAddress());
             }
         });
     }
@@ -61,7 +59,7 @@ public abstract class MessageAdapter extends RecyclerView.Adapter<MessageAdapter
 
     @Override
     public int getItemCount() {
-        return mMessageHashMap.size();
+        return mMessageRowArrayList.size();
     }
 
     static class DataHolder extends RecyclerView.ViewHolder {
