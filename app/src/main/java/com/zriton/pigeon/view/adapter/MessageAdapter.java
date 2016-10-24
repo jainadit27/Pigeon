@@ -47,7 +47,7 @@ public abstract class MessageAdapter extends RecyclerView.Adapter<MessageAdapter
     public void onBindViewHolder(DataHolder holder, int position) {
         final ArrayList<ModelMessage> lModelMessageArrayList =(new ArrayList<>(mMessageHashMap.values())).get(position);
         final ModelMessage lModelMessage = lModelMessageArrayList.get(lModelMessageArrayList.size()-1);
-        holder.tvName.setText(lModelMessage.getAddress());
+        holder.tvName.setText(lModelMessage.getAddress() +" ("+String.valueOf(lModelMessageArrayList.size())+")");
         holder.tvConversation.setText(lModelMessage.getBody());
         holder.tvDate.setText(lModelMessage.getDate());
         holder.mView.setOnClickListener(new View.OnClickListener() {
