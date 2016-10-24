@@ -31,4 +31,17 @@ public class DateUtils {
         DateFormat targetFormat = new SimpleDateFormat(newFormat, Locale.US);
         return targetFormat.format(lCalendar.getTime());
     }
+
+    public static String getCurrentDate()
+    {
+        Calendar lCalendar = Calendar.getInstance();
+        DateFormat lDateFormat = new SimpleDateFormat("dd MMM", Locale.US);
+        return lDateFormat.format(lCalendar.getTime());
+    }
+
+    public static long getCurrentTimeStamp()
+    {
+        Calendar lCalendar = Calendar.getInstance();
+        return lCalendar.getTimeInMillis();
+    }
 }
