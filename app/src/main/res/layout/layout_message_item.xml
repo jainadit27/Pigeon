@@ -19,6 +19,7 @@
             android:layout_height="48dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
+            android:visibility="gone"
             android:background="@drawable/circle_accent_bg">
 
 

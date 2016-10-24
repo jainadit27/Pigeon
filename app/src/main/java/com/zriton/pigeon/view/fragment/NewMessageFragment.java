@@ -14,6 +14,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -75,8 +76,8 @@ public class NewMessageFragment extends Fragment {
         else if (!message.equals("")) {
             ModelMessage lModelMessage = buildMessage(message);
 
-            /*SmsManager sm = SmsManager.getDefault();
-            sm. sendTextMessage(lModelMessage.getAddress(),null,lModelMessage.getBody(),null,null);*/
+            SmsManager sm = SmsManager.getDefault();
+            sm. sendTextMessage(lModelMessage.getAddress(),null,lModelMessage.getBody(),null,null);
 
             mThreadAdapter.updateData(lModelMessage);
             restoreState();

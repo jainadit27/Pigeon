@@ -102,8 +102,6 @@ public class MessageFragment extends Fragment implements SearchView.OnQueryTextL
         View lView = inflater.inflate(R.layout.fragment_message, container, false);
         ButterKnife.bind(this, lView);
         initRecyclerView();
-        mMessageRowArrayList = getMessages();
-        mMessageAdapter.addMessages(mMessageRowArrayList);
         mApiClient = new GoogleApiClient.Builder(getContext())
                 .addApi(Drive.API)
                 .addScope(Drive.SCOPE_FILE)
@@ -210,6 +208,8 @@ public class MessageFragment extends Fragment implements SearchView.OnQueryTextL
         ActionBar lActionBar = ((MainActivity) getActivity()).getSupportActionBar();
         lActionBar.setDisplayHomeAsUpEnabled(false);
         lActionBar.setDisplayShowHomeEnabled(false);
+        mMessageRowArrayList = getMessages();
+        mMessageAdapter.addMessages(mMessageRowArrayList);
     }
 
     @Override
