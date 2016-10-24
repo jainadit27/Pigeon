@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private void initFragment()
     {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.container, MessageFragment.newInstance(),"Login").commit();
+        ft.replace(R.id.container, MessageFragment.newInstance()).commit();
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
