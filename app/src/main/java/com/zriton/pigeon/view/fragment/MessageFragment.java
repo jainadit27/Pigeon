@@ -21,13 +21,17 @@ import android.view.ViewGroup;
 
 import com.zriton.pigeon.R;
 import com.zriton.pigeon.data.model.ModelMessage;
+import com.zriton.pigeon.data.model.ModelMessageRow;
 import com.zriton.pigeon.utils.DateUtils;
 import com.zriton.pigeon.utils.Singleton;
 import com.zriton.pigeon.view.activity.MainActivity;
 import com.zriton.pigeon.view.adapter.MessageAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,6 +65,7 @@ public class MessageFragment extends Fragment implements SearchView.OnQueryTextL
     }
 
     MessageAdapter mMessageAdapter;
+    ArrayList<ModelMessageRow> mMessageRowArrayList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -69,7 +74,8 @@ public class MessageFragment extends Fragment implements SearchView.OnQueryTextL
         View lView = inflater.inflate(R.layout.fragment_message, container, false);
         ButterKnife.bind(this, lView);
         initRecyclerView();
-        mMessageAdapter.addMessages(getMessages());
+        mMessageRowArrayList = getMessages();
+        mMessageAdapter.addMessages(mMessageRowArrayList);
         return lView;
     }
 
@@ -92,7 +98,7 @@ public class MessageFragment extends Fragment implements SearchView.OnQueryTextL
         mRecyclerView.setAdapter(mMessageAdapter);
     }
 
-    private HashMap<String, ArrayList<ModelMessage>> getMessages() {
+    private ArrayList<ModelMessageRow> getMessages() {
         HashMap<String, ArrayList<ModelMessage>> lMessageHashMap = new HashMap<>();
         Cursor cursor = getActivity().
                 getContentResolver().query(Uri.parse("content://sms"),
@@ -117,6 +123,7 @@ public class MessageFragment extends Fragment implements SearchView.OnQueryTextL
                 Long milliseconds = Long.parseLong(cursor.getString(indexDate));
                 lModelMessage.setDate(DateUtils.changeFormat(milliseconds, "dd MMM"));
                 lModelMessage.setType(cursor.getString(indexType));
+                lModelMessage.setTimestamp(milliseconds);
 
                 if (lMessageHashMap.containsKey(lModelMessage.getAddress())) {
                     lModelMessageArrayList = lMessageHashMap.get(lModelMessage.getAddress());
@@ -130,8 +137,38 @@ public class MessageFragment extends Fragment implements SearchView.OnQueryTextL
             // empty box, no SMS
             cursor.close();
         }
+
+        //For adapter
+        Iterator it = lMessageHashMap.entrySet().iterator();
+        ArrayList<ModelMessageRow> lMessageRowArrayList = new ArrayList<>();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            if(pair.getValue() instanceof ArrayList)
+            {
+                ArrayList<ModelMessage> conversations = (ArrayList<ModelMessage>)pair.getValue();
+                String searchKey = "";
+                for(ModelMessage item : conversations)
+                {
+                    searchKey=searchKey+item.getBody();
+                }
+
+                ModelMessage lModelMessage = conversations.get(conversations.size()-1);
+
+                ModelMessageRow lModelMessageRow = new ModelMessageRow();
+                lModelMessageRow.setBody(lModelMessage.getBody());
+                lModelMessageRow.setAddress(lModelMessage.getAddress());
+                lModelMessageRow.setTimestamp(lModelMessage.getTimestamp());
+                lModelMessageRow.setDate(lModelMessage.getDate());
+                lModelMessageRow.setThreadCount(conversations.size());
+                lModelMessageRow.setSearchKey(searchKey);
+
+                lMessageRowArrayList.add(lModelMessageRow);
+            }
+
+        }
+        Collections.sort(lMessageRowArrayList);
         Singleton.getInstance().setMessageHashMap(lMessageHashMap);
-        return lMessageHashMap;
+        return lMessageRowArrayList;
     }
 
     @Override
@@ -154,7 +191,7 @@ public class MessageFragment extends Fragment implements SearchView.OnQueryTextL
                 new MenuItemCompat.OnActionExpandListener() {
                     @Override
                     public boolean onMenuItemActionCollapse(MenuItem item) {
-                        // mMessageAdapter.setFilter(mCountryModel);
+                        mMessageAdapter.addMessages(mMessageRowArrayList);
                         return true;
                     }
 
@@ -167,6 +204,7 @@ public class MessageFragment extends Fragment implements SearchView.OnQueryTextL
 
     @Override
     public boolean onQueryTextChange(String newText) {
+        mMessageAdapter.addMessages(filter(mMessageRowArrayList,newText));
         return true;
     }
 
@@ -175,7 +213,23 @@ public class MessageFragment extends Fragment implements SearchView.OnQueryTextL
         return false;
     }
 
-    private void filter() {
+    /**Filters the input list
+     *
+     * @param pMessageRowList The original list to be filtered
+     * @param query Query to be searched
+     * @return List of filtered items
+     */
 
+    private ArrayList<ModelMessageRow> filter(ArrayList<ModelMessageRow> pMessageRowList, String query) {
+        query = query.toLowerCase();
+
+        final ArrayList<ModelMessageRow> filteredModelList = new ArrayList<>();
+        for (ModelMessageRow lModelMessageRow : pMessageRowList) {
+            final String text = lModelMessageRow.getBody().toLowerCase();
+            if (text.contains(query)) {
+                filteredModelList.add(lModelMessageRow);
+            }
+        }
+        return filteredModelList;
     }
 }
