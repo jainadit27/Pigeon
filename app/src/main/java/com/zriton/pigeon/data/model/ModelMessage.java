@@ -1,15 +1,12 @@
 package com.zriton.pigeon.data.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.util.Comparator;
+import android.util.Log;
 
 /**
  * Created by aditya on 24/10/16.
  */
 
-public class ModelMessage implements Parcelable,Comparator<ModelMessage> {
+public class ModelMessage implements Comparable {
 
 
     public String getAddress() {
@@ -56,15 +53,7 @@ public class ModelMessage implements Parcelable,Comparator<ModelMessage> {
     private String body;
     private long timestamp;
     private String date;
-
-
-
     private String type;
-
-    @Override
-    public int compare(ModelMessage pModelMessage, ModelMessage pT1) {
-        return (int) (pModelMessage.getTimestamp()-pT1.getTimestamp());
-    }
 
     @Override
     public boolean equals(Object obj) {
@@ -78,12 +67,10 @@ public class ModelMessage implements Parcelable,Comparator<ModelMessage> {
     }
 
     @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel pParcel, int pI) {
-
+    public int compareTo(Object pO) {
+        ModelMessage lModelMessage = (ModelMessage) pO;
+        long diff =  this.getTimestamp() - lModelMessage.getTimestamp();
+        Log.d("asdd",String.valueOf(diff));
+        return (int) (this.getTimestamp() - lModelMessage.getTimestamp());
     }
 }
