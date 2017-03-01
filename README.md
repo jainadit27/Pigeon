@@ -1,16 +1,6 @@
 # Pigeon
-SMS client based on Allo design. The app uses following libraries
+SMS client based on Allo design. The app supports following functionalities-
 
-com.android.support:appcompat-v7
-
-com.android.support:support-v4
-
-com.android.support:design
-
-com.android.support:recyclerview-v7
-
-com.android.support:cardview-v7
-
-com.google.android.gms:play-services-drive
-
-com.jakewharton:butterknife
+1. View All SMS in beautiful UI inpired by Google Allo
+2. Full text SMS search
+3. Ready for Android M
